@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  proxy:
+    image: "traefik:1.7.14-alpine"
+    command: --api --docker
+    labels:
+      traefik.port: 8080
+      traefik.frontend.rule: Host:traefik.${DOMAIN}
+      traefik.frontend.auth.basic.users: "brycen:${TRAEFIK_PASSWORD}"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    networks:
+      - default
+
+  blog:
+    image: ghost
+    labels:
+      traefik.frontend.rule: Host:${DOMAIN}
+      traefik.port: 2368
+    volumes:
+      - ./London/:/var/lib/ghost/content/themes/London
+      - ./themes/:/var/lib/ghost/content/themes/
+    environment:
+      NODE_ENV: development
+      url: https://${DOMAIN}
+    networks:
+      - default
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - default

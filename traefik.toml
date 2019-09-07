@@ -1,0 +1,29 @@
+logLevel = "INFO"
+
+defaultEntryPoints = ["https", "http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+  compress = true
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  compress = true
+    [entryPoints.https.tls]
+
+[acme]
+  email = "dorsay@live.ca"
+  storage = "acme.json"
+  entryPoint = "https"
+  [acme.tlsChallenge]
+
+  [[acme.domains]]
+    main = "dorsay.dev"
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "dorsay.dev"
+exposedByDefault = true
+watch = true
