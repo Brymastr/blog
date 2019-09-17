@@ -1,34 +1,35 @@
-version: "3"
+version: "3.7"
 
 services:
-  proxy:
+  traefik:
     image: "traefik:1.7.14-alpine"
     command: --api --docker
     labels:
       traefik.port: 8080
       traefik.frontend.rule: Host:traefik.${DOMAIN}
       traefik.frontend.auth.basic.users: "brycen:${TRAEFIK_PASSWORD}"
+      traefik.docker.network: blog_default
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.toml:/traefik.toml
+      - ./traefik.${NODE_ENV}.toml:/traefik.toml
       - ./acme.json:/acme.json
     networks:
       - default
 
-  blog:
+  ghost:
     image: ghost
     labels:
       traefik.frontend.rule: Host:${DOMAIN}
       traefik.port: 2368
+      traefik.docker.network: blog_default
     volumes:
-      - ./London/:/var/lib/ghost/content/themes/London
       - ./themes/:/var/lib/ghost/content/themes/
     environment:
       NODE_ENV: development
-      url: https://${DOMAIN}
+      url: http://${DOMAIN}
     networks:
       - default
 
@@ -39,3 +40,24 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
       - default
+    volumes:
+      - data:/var/lib/mysql
+
+  spiral:
+    image: brymastr/spiral
+    restart: unless-stopped
+    networks:
+      - default
+    labels:
+      traefik.frontend.rule: Host:spiral.${DOMAIN}
+
+  primes:
+    image: brymastr/primes
+    restart: unless-stopped
+    networks:
+      - default
+    labels:
+      traefik.frontend.rule: Host:primes.${DOMAIN}
+
+volumes:
+  data:
