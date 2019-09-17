@@ -21,6 +21,7 @@ defaultEntryPoints = ["https", "http"]
 
   [[acme.domains]]
     main = "dorsay.dev"
+    sans = ["traefik.dorsay.dev", "spiral.dorsay.dev", "primes.dorsay.dev"]
 
 [docker]
 endpoint = "unix:///var/run/docker.sock"
