@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   traefik:
-    image: "traefik:1.7.14-alpine"
+    image: "traefik:1.7.17-alpine"
     command: --api --docker
     labels:
       traefik.port: 8080
@@ -14,8 +14,8 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik.${NODE_ENV}.toml:/traefik.toml
-      - ./acme.json:/acme.json
+      - ${PWD}/traefik.${NODE_ENV}.toml:/traefik.toml
+      - ${PWD}/acme.json:/acme.json
     networks:
       - default
 
@@ -28,8 +28,7 @@ services:
     volumes:
       - ./themes/:/var/lib/ghost/content/themes/
     environment:
-      NODE_ENV: development
-      url: http://${DOMAIN}
+      url: https://${DOMAIN}
     networks:
       - default
 
