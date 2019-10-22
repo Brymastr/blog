@@ -58,5 +58,13 @@ services:
     labels:
       traefik.frontend.rule: Host:primes.${DOMAIN}
 
+  halloween:
+    build: ./halloween/
+    restart: unless-stopped
+    networks:
+      - default
+    labels:
+      traefik.frontend.rule: Host:halloween.${DOMAIN}
+
 volumes:
   data:

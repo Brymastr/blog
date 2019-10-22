@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+COMPOSE=docker-compose.${NODE_ENV}.yml
+
+# docker-compose -f $COMPOSE up -d traefik db && \
+#   nodemon --exec "docker-compose -f $COMPOSE up --build --force-recreate --remove-orphans ghost" --watch themes
+
+docker-compose -f $COMPOSE up -d traefik && \
+  nodemon --watch halloween --ext html,css --exec  "docker-compose -f $COMPOSE up --build --force-recreate --remove-orphans halloween"
