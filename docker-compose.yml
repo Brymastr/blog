@@ -51,6 +51,7 @@ services:
       - default
     labels:
       traefik.frontend.rule: Host:spiral.${DOMAIN}
+      traefik.docker.network: blog_default
 
   primes:
     image: brymastr/primes
@@ -59,6 +60,7 @@ services:
       - default
     labels:
       traefik.frontend.rule: Host:primes.${DOMAIN}
+      traefik.docker.network: blog_default
 
   halloween:
     build: ./halloween/
@@ -67,6 +69,7 @@ services:
       - default
     labels:
       traefik.frontend.rule: Host:halloween.${DOMAIN}
+      traefik.docker.network: blog_default
 
 volumes:
   data:
