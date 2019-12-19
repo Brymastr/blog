@@ -18,7 +18,7 @@ services:
       - default
 
   ghost:
-    image: ghost
+    image: ghost:3-alpine
     labels:
       traefik.frontend.rule: Host:${DOMAIN}
       traefik.port: 2368
