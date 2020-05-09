@@ -1,75 +1,65 @@
 version: "3.7"
 
 services:
-  traefik:
-    image: "traefik:1.7.17-alpine"
-    command: --api --docker
+  proxy:
+    image: traefik:v2.2
     restart: unless-stopped
-    labels:
-      traefik.port: 8080
-      traefik.frontend.rule: Host:traefik.${DOMAIN}
-      traefik.frontend.auth.basic.users: "brycen:${TRAEFIK_PASSWORD}"
-      traefik.docker.network: blog_default
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/traefik.${NODE_ENV}.toml:/traefik.toml
+      - ${PWD}/config/${NODE_ENV}/traefik.yml:/etc/traefik/traefik.yml
       - ${PWD}/acme.json:/acme.json
-    networks:
-      - default
+    labels:
+      traefik.http.routers.proxy.rule: Host(`traefik.${DOMAIN}`)
+      traefik.http.services.proxy.loadbalancer.server.port: 8080
 
   ghost:
     image: ghost:3-alpine
     restart: unless-stopped
-    labels:
-      traefik.frontend.rule: Host:${DOMAIN}
-      traefik.port: 2368
-      traefik.docker.network: blog_default
     volumes:
       - ./themes/:/var/lib/ghost/content/themes/
+      - ./content/:/var/lib/ghost/content/
     environment:
-      url: https://${DOMAIN}
-    networks:
-      - default
+      NODE_ENV: ${NODE_ENV}
+      url: ${PROTO}://${DOMAIN}
+    labels:
+      traefik.http.routers.ghost.rule: Host(`${DOMAIN}`)
+      traefik.http.services.ghost.loadbalancer.server.port: 2368
 
   db:
     image: mariadb
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - default
     volumes:
       - data:/var/lib/mysql
+    labels:
+      traefik.enable: false
 
   spiral:
     image: brymastr/spiral
     restart: unless-stopped
-    networks:
-      - default
     labels:
-      traefik.frontend.rule: Host:spiral.${DOMAIN}
-      traefik.docker.network: blog_default
+      traefik.http.routers.spiral.rule: Host(`spiral.${DOMAIN}`)
 
   primes:
     image: brymastr/primes
     restart: unless-stopped
-    networks:
-      - default
     labels:
-      traefik.frontend.rule: Host:primes.${DOMAIN}
-      traefik.docker.network: blog_default
+      traefik.http.routers.primes.rule: Host(`primes.${DOMAIN}`)
 
   halloween:
     build: ./halloween/
     restart: unless-stopped
-    networks:
-      - default
     labels:
-      traefik.frontend.rule: Host:halloween.${DOMAIN}
-      traefik.docker.network: blog_default
+      traefik.http.routers.primes.rule: Host(`halloween.${DOMAIN}`)
+
+  whoami:
+    image: containous/whoami
+    labels:
+      traefik.http.routers.whoami.rule: Host(`whoami.${DOMAIN}`)
 
 volumes:
   data:

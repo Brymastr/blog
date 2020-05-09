@@ -1,0 +1,16 @@
+{
+  "Account": {
+    "Email": "",
+    "Registration": {
+      "body": {
+        "status": "",
+        "contact": []
+      },
+      "uri": ""
+    },
+    "PrivateKey": "",
+    "KeyType": ""
+  },
+  "HTTPChallenges": null,
+  "TLSChallenges": null
+}

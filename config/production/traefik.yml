@@ -1,0 +1,22 @@
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver: leresolver
+        domains:
+          - main: dorsay.dev
+            sans:
+              - "*.dorsay.dev"

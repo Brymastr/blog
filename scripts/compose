@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+env=$NODE_ENV || "local"
+command=$@
+
+cp env/local/.env .env
+
+docker-compose \
+  --project-name blog \
+  $command
+
+rm .env

@@ -1,0 +1,12 @@
+providers:
+  docker: {}
+
+entryPoints:
+  web:
+    address: ":80"
+
+api:
+  insecure: true
+
+log:
+  level: debug
