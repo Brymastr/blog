@@ -4,7 +4,7 @@ log:
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
-    exposedByDefault: false
+    exposedByDefault: true
 
 entryPoints:
   web:
