@@ -20,3 +20,15 @@ entryPoints:
           - main: dorsay.dev
             sans:
               - "*.dorsay.dev"
+
+certificatesResolvers:
+  myresolver:
+    acme:
+      email: dorsay@live.ca
+      storage: acme.json
+      dnsChallenge:
+        provider: digitalocean
+        delayBeforeCheck: 0
+
+api: {}
+ping: {}

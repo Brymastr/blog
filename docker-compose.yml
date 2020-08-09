@@ -4,6 +4,8 @@ services:
   proxy:
     image: traefik:v2.2
     restart: unless-stopped
+    environment:
+      DO_AUTH_TOKEN: ${DO_AUTH_TOKEN}
     ports:
       - "80:80"
       - "443:443"
@@ -12,7 +14,10 @@ services:
       - ${PWD}/config/${NODE_ENV}/traefik.yml:/etc/traefik/traefik.yml
       - ${PWD}/acme.json:/acme.json
     labels:
-      traefik.http.routers.proxy.rule: Host(`traefik.${DOMAIN}`)
+      traefik.http.routers.api.rule: Host(`traefik.${DOMAIN}`)
+      traefik.http.routers.api.service: api@internal
+      traefik.http.routers.api.middlewares: auth
+      traefik.http.middlewares.auth.basicauth.users: test:${TRAEFIK_PASSWORD}
       traefik.http.services.proxy.loadbalancer.server.port: 8080
 
   ghost:
