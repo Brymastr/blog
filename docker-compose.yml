@@ -58,6 +58,7 @@ services:
       traefik.http.routers.spiral.rule: Host(`spiral.${DOMAIN}`)
       traefik.http.routers.spiral.tls: "true"
       traefik.http.routers.spiral.tls.certresolver: default
+      traefik.http.services.spiral.loadbalancer.server.port: 80
 
   primes:
     image: brymastr/primes
@@ -66,6 +67,7 @@ services:
       traefik.http.routers.primes.rule: Host(`primes.${DOMAIN}`)
       traefik.http.routers.primes.tls: "true"
       traefik.http.routers.primes.tls.certresolver: default
+      traefik.http.services.primes.loadbalancer.server.port: 80
 
   halloween:
     build: ./halloween/
@@ -74,6 +76,7 @@ services:
       traefik.http.routers.halloween.rule: Host(`halloween.${DOMAIN}`)
       traefik.http.routers.halloween.tls: "true"
       traefik.http.routers.halloween.tls.certresolver: default
+      traefik.http.services.halloween.loadbalancer.server.port: 80
 
   whoami:
     image: containous/whoami
@@ -81,22 +84,25 @@ services:
       traefik.http.routers.whoami.rule: Host(`whoami.${DOMAIN}`)
       traefik.http.routers.whoami.tls: "true"
       traefik.http.routers.whoami.tls.certresolver: default
+      traefik.http.services.whoami.loadbalancer.server.port: 80
 
   net-worth-web:
     image: brymastr/net-worth-web
     restart: unless-stopped
     labels:
-      traefik.http.routers.net-worth.rule: Host(`net-worth.${DOMAIN}`)
-      traefik.http.routers.net-worth.tls: "true"
-      traefik.http.routers.net-worth.tls.certresolver: default
+      traefik.http.routers.net-worth-web.rule: Host(`net-worth.${DOMAIN}`)
+      traefik.http.routers.net-worth-web.tls: "true"
+      traefik.http.routers.net-worth-web.tls.certresolver: default
+      traefik.http.services.net-worth-web.loadbalancer.server.port: 80
 
   net-worth-api:
     image: brymastr/net-worth-api
     restart: unless-stopped
     labels:
-      traefik.http.routers.net-worth.rule: Host(`net-worth.${DOMAIN}`) && PathPrefix(`/api/`))
-      traefik.http.routers.net-worth.tls: "true"
-      traefik.http.routers.net-worth.tls.certresolver: default
+      traefik.http.routers.net-worth-api.rule: Host(`net-worth.${DOMAIN}`) && PathPrefix(`/api/`)
+      traefik.http.routers.net-worth-api.tls: "true"
+      traefik.http.routers.net-worth-api.tls.certresolver: default
+      traefik.http.services.net-worth-api.loadbalancer.server.port: 3000
 
 volumes:
   data:
