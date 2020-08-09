@@ -18,7 +18,7 @@ entryPoints:
     address: ":443"
     http:
       tls:
-        certResolver: leresolver
+        # certResolver: leresolver
         domains:
           - main: dorsay.dev
             sans:
