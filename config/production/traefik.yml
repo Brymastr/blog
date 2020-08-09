@@ -22,7 +22,7 @@ entryPoints:
               - "*.dorsay.dev"
 
 certificatesResolvers:
-  myresolver:
+  default:
     acme:
       email: dorsay@live.ca
       storage: acme.json
