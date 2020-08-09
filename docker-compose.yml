@@ -36,7 +36,7 @@ services:
     volumes:
       - data:/var/lib/mysql
     labels:
-      traefik.enable: false
+      traefik.enable: "false"
 
   spiral:
     image: brymastr/spiral
@@ -54,12 +54,23 @@ services:
     build: ./halloween/
     restart: unless-stopped
     labels:
-      traefik.http.routers.primes.rule: Host(`halloween.${DOMAIN}`)
+      traefik.http.routers.halloween.rule: Host(`halloween.${DOMAIN}`)
 
   whoami:
     image: containous/whoami
     labels:
       traefik.http.routers.whoami.rule: Host(`whoami.${DOMAIN}`)
 
+  net-worth-web:
+    image: brymastr/net-worth-web
+    restart: unless-stopped
+    labels:
+      traefik.http.routers.net-worth.rule: Host(`net-worth.${DOMAIN}`)
+
+  net-worth-api:
+    image: brymastr/net-worth-api
+    restart: unless-stopped
+    labels:
+      traefik.http.routers.net-worth.rule: Host(`net-worth.${DOMAIN}`) && PathPrefix(`/api/`))
 volumes:
   data:
