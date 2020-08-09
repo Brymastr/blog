@@ -17,8 +17,8 @@ services:
       traefik.http.routers.api.rule: Host(`traefik.${DOMAIN}`)
       traefik.http.routers.api.service: api@internal
       traefik.http.routers.api.middlewares: auth
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.api.tls: "true"
+      traefik.http.routers.api.tls.certresolver: default
       traefik.http.middlewares.auth.basicauth.users: admin:${TRAEFIK_PASSWORD}
       traefik.http.services.proxy.loadbalancer.server.port: 8080
 
@@ -34,8 +34,8 @@ services:
     labels:
       traefik.http.routers.ghost.rule: Host(`${DOMAIN}`)
       traefik.http.services.ghost.loadbalancer.server.port: 2368
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.ghost.tls: "true"
+      traefik.http.routers.ghost.tls.certresolver: default
 
   db:
     image: mariadb
@@ -52,47 +52,47 @@ services:
     restart: unless-stopped
     labels:
       traefik.http.routers.spiral.rule: Host(`spiral.${DOMAIN}`)
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.spiral.tls: "true"
+      traefik.http.routers.spiral.tls.certresolver: default
 
   primes:
     image: brymastr/primes
     restart: unless-stopped
     labels:
       traefik.http.routers.primes.rule: Host(`primes.${DOMAIN}`)
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.primes.tls: "true"
+      traefik.http.routers.primes.tls.certresolver: default
 
   halloween:
     build: ./halloween/
     restart: unless-stopped
     labels:
       traefik.http.routers.halloween.rule: Host(`halloween.${DOMAIN}`)
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.halloween.tls: "true"
+      traefik.http.routers.halloween.tls.certresolver: default
 
   whoami:
     image: containous/whoami
     labels:
       traefik.http.routers.whoami.rule: Host(`whoami.${DOMAIN}`)
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.whoami.tls: "true"
+      traefik.http.routers.whoami.tls.certresolver: default
 
   net-worth-web:
     image: brymastr/net-worth-web
     restart: unless-stopped
     labels:
       traefik.http.routers.net-worth.rule: Host(`net-worth.${DOMAIN}`)
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.net-worth.tls: "true"
+      traefik.http.routers.net-worth.tls.certresolver: default
 
   net-worth-api:
     image: brymastr/net-worth-api
     restart: unless-stopped
     labels:
       traefik.http.routers.net-worth.rule: Host(`net-worth.${DOMAIN}`) && PathPrefix(`/api/`))
-      traefik.http.routers.blog.tls: "true"
-      traefik.http.routers.blog.tls.certresolver: default
+      traefik.http.routers.net-worth.tls: "true"
+      traefik.http.routers.net-worth.tls.certresolver: default
 
 volumes:
   data:
