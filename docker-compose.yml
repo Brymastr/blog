@@ -15,13 +15,16 @@ services:
       - ${PWD}/config/${NODE_ENV}/traefik.yml:/etc/traefik/traefik.yml
       - ${PWD}/acme.json:/acme.json
     labels:
-      traefik.http.routers.api.rule: Host(`traefik.${DOMAIN}`)
-      traefik.http.routers.api.service: api@internal
-      traefik.http.routers.api.middlewares: auth
-      traefik.http.routers.api.tls: "true"
-      traefik.http.routers.api.tls.certresolver: default
+      traefik.http.routers.traefik.rule: Host(`traefik.${DOMAIN}`)
+      traefik.http.routers.traefik.service: api@internal
+      traefik.http.routers.traefik.middlewares: auth
+      traefik.http.routers.traefik.tls: "true"
+      traefik.http.routers.traefik.tls.certresolver: default
       traefik.http.middlewares.auth.basicauth.users: admin:${TRAEFIK_PASSWORD}
       traefik.http.services.proxy.loadbalancer.server.port: 8080
+
+      traefik.http.routers.wildcard-certs.tls.domains[0].main: ${DOMAIN}
+      traefik.http.routers.wildcard-certs.tls.domains[0].sans: "*.${DOMAIN}"
 
   ghost:
     image: ghost:3-alpine
@@ -34,9 +37,9 @@ services:
       url: ${PROTO}://${DOMAIN}
     labels:
       traefik.http.routers.ghost.rule: Host(`${DOMAIN}`)
-      traefik.http.services.ghost.loadbalancer.server.port: 2368
       traefik.http.routers.ghost.tls: "true"
       traefik.http.routers.ghost.tls.certresolver: default
+      traefik.http.services.ghost.loadbalancer.server.port: 2368
 
   db:
     image: mariadb

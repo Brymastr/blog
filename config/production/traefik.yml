@@ -1,5 +1,5 @@
 log:
-  level: DEBUG
+  level: INFO
 
 providers:
   docker:
@@ -16,13 +16,13 @@ entryPoints:
 
   websecure:
     address: ":443"
-    http:
-      tls:
-        # certResolver: leresolver
-        domains:
-          - main: dorsay.dev
-            sans:
-              - "*.dorsay.dev"
+    # http:
+    #   tls:
+    #     # certResolver: leresolver
+    #     domains:
+    #       - main: dorsay.dev
+    #         sans:
+    #           - "*.dorsay.dev"
 
 certificatesResolvers:
   default:
@@ -31,7 +31,7 @@ certificatesResolvers:
       storage: acme.json
       dnsChallenge:
         provider: digitalocean
-        delayBeforeCheck: 0
+        delayBeforeCheck: 30
 
 api: {}
 ping: {}
