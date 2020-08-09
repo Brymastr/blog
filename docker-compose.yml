@@ -98,6 +98,11 @@ services:
   net-worth-api:
     image: brymastr/net-worth-api
     restart: unless-stopped
+    environment:
+      clientId: ${clientId}
+      clientSecret: ${clientSecret}
+      authRedirectUri: ${authRedirectUri}
+      clientRedirectUri: ${clientRedirectUri}
     labels:
       traefik.http.routers.net-worth-api.rule: Host(`net-worth.${DOMAIN}`) && PathPrefix(`/api/`)
       traefik.http.routers.net-worth-api.tls: "true"
