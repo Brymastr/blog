@@ -109,5 +109,12 @@ services:
       traefik.http.routers.net-worth-api.tls.certresolver: default
       traefik.http.services.net-worth-api.loadbalancer.server.port: 3000
 
+  net-worth-predict:
+    # image: brymastr/net-worth-predict
+    build: ../ynab-enhanced/projections
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+
 volumes:
   data:
