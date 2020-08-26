@@ -1,3 +1,5 @@
 themes/
-.env*
+.env
 env.zip
+env/*
+!env/placeholder

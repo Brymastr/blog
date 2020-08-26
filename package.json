@@ -1,0 +1,16 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "scripts": {
+    "deploy": "NODE_ENV=production ./scripts/deploy",
+    "login": "cd infrastructure && ./login"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brymastr/blog.git"
+  },
+  "keywords": ["Docker", "Terraform"],
+  "author": "Brycen Dorsay <dorsay@live.ca>",
+  "license": "GPL",
+  "homepage": "https://github.com/brymastr/blog#readme"
+}

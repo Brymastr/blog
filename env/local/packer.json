@@ -1,5 +1,0 @@
-{
-  "variables": {
-    "api_token": "{{env `DO_TOKEN`}}"
-  }
-}

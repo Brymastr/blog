@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+ip=$(cd infrastructure && terraform output ip)
+docker context create blog --docker host=ssh://brycen@$ip

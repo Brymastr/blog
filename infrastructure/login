@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+usr=${1:-'brycen'}
+
+ssh $usr@$(terraform output ip) -i ../env/id_ecdsa

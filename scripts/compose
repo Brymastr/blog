@@ -3,7 +3,7 @@
 env=$NODE_ENV || "local"
 command=$@
 
-cp env/local/.env .env
+cp env/$NODE_ENV/.env .env
 
 docker-compose \
   --project-name blog \

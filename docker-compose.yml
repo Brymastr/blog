@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.8"
 
 services:
   proxy:
@@ -12,8 +12,8 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${PWD}/config/${NODE_ENV}/traefik.yml:/etc/traefik/traefik.yml
-      - ${PWD}/acme.json:/acme.json
+      - /home/brycen/config/${NODE_ENV}/traefik.yml:/etc/traefik/traefik.yml
+      - /home/brycen/acme.json:/acme.json
     labels:
       traefik.http.routers.traefik.rule: Host(`traefik.${DOMAIN}`)
       traefik.http.routers.traefik.service: api@internal
@@ -30,11 +30,16 @@ services:
     image: ghost:3-alpine
     restart: unless-stopped
     volumes:
-      - ./themes/:/var/lib/ghost/content/themes/
-      - ./content/:/var/lib/ghost/content/
+      - /home/brycen/themes/:/var/lib/ghost/content/themes/
+      - /home/brycen/content/:/var/lib/ghost/content/
     environment:
       NODE_ENV: ${NODE_ENV}
       url: ${PROTO}://${DOMAIN}
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: root
+      database__connection__password: ${DB_PASSWORD}
+      database__connection__database: ghost
     labels:
       traefik.http.routers.ghost.rule: Host(`${DOMAIN}`)
       traefik.http.routers.ghost.tls: "true"
@@ -86,17 +91,17 @@ services:
       traefik.http.routers.whoami.tls.certresolver: default
       traefik.http.services.whoami.loadbalancer.server.port: 80
 
-  net-worth-web:
-    image: brymastr/net-worth-web
+  wealth-for-ynab-web:
+    image: docker.pkg.github.com/brymastr/wealth-for-ynab/wealth-for-ynab-web:ui
     restart: unless-stopped
     labels:
-      traefik.http.routers.net-worth-web.rule: Host(`net-worth.${DOMAIN}`)
-      traefik.http.routers.net-worth-web.tls: "true"
-      traefik.http.routers.net-worth-web.tls.certresolver: default
-      traefik.http.services.net-worth-web.loadbalancer.server.port: 80
+      traefik.http.routers.wealth-for-ynab-web.rule: Host(`wealth.${DOMAIN}`)
+      traefik.http.routers.wealth-for-ynab-web.tls: "true"
+      traefik.http.routers.wealth-for-ynab-web.tls.certresolver: default
+      traefik.http.services.wealth-for-ynab-web.loadbalancer.server.port: 3000
 
-  net-worth-api:
-    image: brymastr/net-worth-api
+  wealth-for-ynab-api:
+    image: docker.pkg.github.com/brymastr/wealth-for-ynab/wealth-for-ynab-api:ui
     restart: unless-stopped
     environment:
       clientId: ${clientId}
@@ -104,17 +109,16 @@ services:
       authRedirectUri: ${authRedirectUri}
       clientRedirectUri: ${clientRedirectUri}
     labels:
-      traefik.http.routers.net-worth-api.rule: Host(`net-worth.${DOMAIN}`) && PathPrefix(`/api/`)
-      traefik.http.routers.net-worth-api.tls: "true"
-      traefik.http.routers.net-worth-api.tls.certresolver: default
-      traefik.http.services.net-worth-api.loadbalancer.server.port: 3000
+      traefik.http.routers.wealth-for-ynab-api.rule: Host(`wealth.${DOMAIN}`) && PathPrefix(`/api/`)
+      traefik.http.routers.wealth-for-ynab-api.tls: "true"
+      traefik.http.routers.wealth-for-ynab-api.tls.certresolver: default
+      traefik.http.services.wealth-for-ynab-api.loadbalancer.server.port: 3000
 
-  net-worth-predict:
-    # image: brymastr/net-worth-predict
-    build: ../ynab-enhanced/projections
+  wealth-for-ynab-forecast:
+    image: docker.pkg.github.com/brymastr/wealth-for-ynab/wealth-for-ynab-forecast:ui
     restart: unless-stopped
-    ports:
-      - "8000:80"
+    labels:
+      traefik.enable: "false"
 
 volumes:
   data:
