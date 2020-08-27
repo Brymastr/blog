@@ -15,7 +15,7 @@ resource "digitalocean_droplet" "blog_1" {
   image  = data.digitalocean_image.blog_base.id
   name   = "blog-1"
   region = "tor1"
-  size   = "s-1vcpu-1gb"
+  size   = "s-1vcpu-2gb"
   ssh_keys = [digitalocean_ssh_key.default.id]
 
 }

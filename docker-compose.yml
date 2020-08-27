@@ -108,6 +108,7 @@ services:
       clientSecret: ${clientSecret}
       authRedirectUri: ${authRedirectUri}
       clientRedirectUri: ${clientRedirectUri}
+      forecaseUrl: http://wealth-for-ynab-forecast:3001
     labels:
       traefik.http.routers.wealth-for-ynab-api.rule: Host(`wealth.${DOMAIN}`) && PathPrefix(`/api/`)
       traefik.http.routers.wealth-for-ynab-api.tls: "true"
