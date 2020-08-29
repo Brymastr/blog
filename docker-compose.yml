@@ -26,6 +26,17 @@ services:
       traefik.http.routers.wildcard-certs.tls.domains[0].main: ${DOMAIN}
       traefik.http.routers.wildcard-certs.tls.domains[0].sans: "*.${DOMAIN}"
 
+  portainer:
+    image: portainer/portainer:1.24.1
+    volumes:
+      - portainer:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      traefik.http.services.portainer.loadbalancer.server.port: 9000
+      traefik.http.routers.portainer.tls: "true"
+      traefik.http.routers.portainer.rule: Host(`portainer.${DOMAIN}`)
+      traefik.http.routers.portainer.tls.certresolver: default
+
   ghost:
     image: ghost:3-alpine
     restart: unless-stopped
@@ -123,3 +134,4 @@ services:
 
 volumes:
   data:
+  portainer:
