@@ -2,4 +2,6 @@
 
 docker context use blog
 
-./scripts/compose up -d
+./scripts/compose pull
+
+./scripts/compose up "-d"
