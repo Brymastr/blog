@@ -13,4 +13,12 @@ registerLanguage('typescript', typescript);
 registerLanguage('html', html);
 registerLanguage('yaml', yaml);
 registerLanguage('json', json);
-export default highlightAll;
+
+export default function () {
+  highlightAll();
+  const blocks = document.querySelectorAll('pre code.hljs');
+  Array.prototype.forEach.call(blocks, function (block) {
+    const language = block.result.language;
+    if (language != undefined) block.insertAdjacentHTML('afterbegin', `<label>${language}</label>`);
+  });
+}

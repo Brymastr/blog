@@ -6,16 +6,7 @@ import { format } from 'date-fns';
 import HomeButton from '../../../components/HomeButton';
 import Error404Page from '../../../components/Error404Page';
 import styles from '../../../styles/Post.module.scss';
-import highlightCode from '../../../components/Highlight';
-
-function formatCodeBlocks() {
-  highlightCode();
-  const blocks = document.querySelectorAll('pre code.hljs');
-  Array.prototype.forEach.call(blocks, function (block) {
-    const language = block.result.language;
-    if (language != undefined) block.insertAdjacentHTML('afterbegin', `<label>${language}</label>`);
-  });
-}
+import formatCodeBlocks from '../../../components/Highlight';
 
 type PostProps = {
   title: string;
