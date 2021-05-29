@@ -31,7 +31,7 @@ const PostPage = ({ title, date, content }: PostProps) => {
     <>
       <HomeButton />
 
-      <div className="container mx-auto">
+      <div className="container mx-auto px-5">
         <div className="py-12">
           <h1 className="text-4xl font-bold mb-2">{title}</h1>
           <p className="text-gray-400 mb-5">{meta}</p>
