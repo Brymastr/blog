@@ -14,7 +14,7 @@ registerLanguage('html', html);
 registerLanguage('yaml', yaml);
 registerLanguage('json', json);
 
-export default function () {
+export default function highlight() {
   highlightAll();
   const blocks = document.querySelectorAll('pre code.hljs');
   Array.prototype.forEach.call(blocks, function (block) {
