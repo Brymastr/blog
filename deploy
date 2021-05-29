@@ -3,6 +3,8 @@ export AWS_PROFILE=personal
 export AWS_REGION=us-east-1
 export BUCKET_NAME=blog-dev-websitebucket-nrovuqr6irg
 export DISTRIBUTION_ID=E1U0MGLVOVFLHZ
+# export BUCKET_NAME=blog-prod-websitebucket-1iqzg3r4i7xdz
+# export DISTRIBUTION_ID=E2PXYKBG0NUI4F
 
 template() {
     echo "Building and deploying Cloudformation template"
