@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>dorsay.dev</title>
+        <title>Brycen Dorsay | dorsay.dev</title>
         <meta name="description" content="dorsay.dev | Brycen Dorsay | Software Developer" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -53,8 +53,12 @@ export default function Home() {
         <h1 className="text-5xl font-bold">Brycen Dorsay</h1>
         <h2 className="text-2xl py-2">Software Engineering</h2>
         <div className="flex justify-between w-32 pt-10">
-          <Link href={linkedin}>LinkdIn</Link>
-          <Link href={github}>GitHub</Link>
+          <Link href={linkedin}>
+            <a className="cursor-pointer hover:text-red-400 transition-colors">LinkdIn</a>
+          </Link>
+          <Link href={github}>
+            <a className="cursor-pointer hover:text-red-400 transition-colors">GitHub</a>
+          </Link>
         </div>
       </header>
 
