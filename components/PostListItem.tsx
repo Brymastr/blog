@@ -14,7 +14,7 @@ const PostListItem: FunctionComponent<Props> = ({ title, date, preview, slug }) 
 
   return (
     <div className="py-24">
-      <Link href={`post/${slug}`}>
+      <Link href={`/post/${slug}`}>
         <h3 className="text-3xl font-bold hover:text-red-400 mb-2 cursor-pointer transition-colors">
           {title}
         </h3>

@@ -19,14 +19,7 @@ type PostProps = {
 
 const PostPage = ({ title, date, content }: PostProps) => {
   const readTime = Math.round(content.split(' ').length / 200);
-  const meta =
-    readTime >= 1 ? (
-      <>
-        {date} | {readTime} min read
-      </>
-    ) : (
-      <>{date}</>
-    );
+  const meta = readTime >= 1 ? `${date} | ${readTime} min read` : date;
 
   return (
     <>

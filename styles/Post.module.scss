@@ -27,4 +27,32 @@
     white-space: nowrap;
     font-family: 'Fira Code', monospace;
   }
+
+  h3 {
+    @apply text-2xl;
+    @apply font-bold;
+    @apply mb-2;
+  }
+
+  hr {
+    @apply py-5;
+  }
+
+  ol {
+    list-style: none;
+    counter-reset: list-counter;
+    margin-bottom: 2em;
+
+    li {
+      counter-increment: list-counter;
+      margin-left: 30px;
+
+      &::before {
+        content: counter(list-counter) '. ';
+        font-weight: bold;
+        margin-right: 10px;
+        margin-left: -26px;
+      }
+    }
+  }
 }
