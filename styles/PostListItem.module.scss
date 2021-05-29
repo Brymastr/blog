@@ -1,0 +1,5 @@
+.postListItem {
+  &:hover h3 {
+    @apply text-red-400;
+  }
+}
