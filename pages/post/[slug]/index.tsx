@@ -1,20 +1,15 @@
 import { useRouter } from 'next/router';
 import posts from '../../../posts.json';
-import React from 'react';
-import DefaultErrorPage from 'next/error';
-import Head from 'next/head';
-import Link from 'next/link';
+import React, { useEffect } from 'react';
 import FooterEnd from '../../../components/FooterEnd';
 import { format } from 'date-fns';
-
-const ErrorPage = () => (
-  <>
-    <Head>
-      <meta name="robots" content="noindex" />
-    </Head>
-    <DefaultErrorPage statusCode={404} />
-  </>
-);
+import HomeButton from '../../../components/HomeButton';
+import Error404Page from '../../../components/Error404Page';
+import styles from '../../../styles/Post.module.scss';
+import { registerLanguage, highlightAll } from 'highlight.js';
+import shell from 'highlight.js/lib/languages/shell';
+import 'highlight.js/styles/tomorrow-night-eighties.css';
+registerLanguage('shell', shell);
 
 type PostProps = {
   title: string;
@@ -35,19 +30,17 @@ const PostPage = ({ title, date, content }: PostProps) => {
 
   return (
     <>
-      <div className="flex justify-between  text-gray-400 p-5">
-        <Link href="/">
-          <a className="rounded-full border-gray-400 border-solid border p-2 px-4">&#60; Home</a>
-        </Link>
-      </div>
+      <HomeButton />
 
       <div className="container mx-auto">
         <div className="py-12">
-          <h1 className="text-3xl font-bold mb-2">{title}</h1>
+          <h1 className="text-4xl font-bold mb-2">{title}</h1>
           <p className="text-gray-400 mb-5">{meta}</p>
         </div>
         <hr className="solid pt-12"></hr>
-        <p dangerouslySetInnerHTML={{ __html: content }} />
+
+        <div id="post-content" className={styles.post} dangerouslySetInnerHTML={{ __html: content }} />
+
         <FooterEnd />
       </div>
     </>
@@ -58,14 +51,23 @@ const Post = () => {
   const router = useRouter();
   const { slug } = router.query;
 
+  useEffect(() => {
+    highlightAll();
+    var blocks = document.querySelectorAll('pre code.hljs');
+    Array.prototype.forEach.call(blocks, function (block) {
+      var language = block.result.language;
+      block.insertAdjacentHTML('afterbegin', `<label>${language}</label>`);
+    });
+  });
+
   const post = posts.find(x => x.slug === slug);
 
   let element: JSX.Element;
 
   if (!post) {
-    element = ErrorPage();
+    element = Error404Page();
   } else {
-    const date = format(new Date(post.published_at), 'dd MMM yyyy');
+    const date = format(new Date(post.published_at as string), 'dd MMM yyyy');
     const { title, content } = post;
 
     element = PostPage({ title, date, content });
