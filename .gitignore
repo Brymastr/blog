@@ -37,3 +37,9 @@ yarn-error.log*
 # custom
 archive/
 .aws-sam/
+
+# ghost
+/ghost/apps
+/ghost/logs
+/ghost/settings
+/ghost/themes

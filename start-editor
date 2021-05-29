@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+dockerContainerId=$(docker run -d --rm --name local-ghost -e url=http://localhost:3001 -p 3001:2368 -v $(pwd)/ghost:/var/lib/ghost/content ghost:alpine)
+
+sleep 2
+
+sensible-browser "http://localhost:3001/ghost/#/posts"
+
+# docker attach $dockerContainerId
+
+function cleanup {
+  echo -e "\nExporting posts and stopping Ghost..."
+
+  ./node_modules/.bin/ts-node fetchPosts.ts
+  echo "Posts exported to posts_from_ghost.json."
+  
+  docker stop $dockerContainerId > /dev/null 2>&1
+  echo "Ghost Docker container stopped."
+}
+
+
+(trap cleanup EXIT ; read -r -d '' _ </dev/tty)
