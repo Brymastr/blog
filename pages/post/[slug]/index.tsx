@@ -11,6 +11,15 @@ import shell from 'highlight.js/lib/languages/shell';
 import 'highlight.js/styles/tomorrow-night-eighties.css';
 registerLanguage('shell', shell);
 
+function formatCodeBlocks() {
+  highlightAll();
+  const blocks = document.querySelectorAll('pre code.hljs');
+  Array.prototype.forEach.call(blocks, function (block) {
+    const language = block.result.language;
+    if (language != undefined) block.insertAdjacentHTML('afterbegin', `<label>${language}</label>`);
+  });
+}
+
 type PostProps = {
   title: string;
   date: string;
@@ -44,14 +53,7 @@ const Post = () => {
   const router = useRouter();
   const { slug } = router.query;
 
-  useEffect(() => {
-    highlightAll();
-    var blocks = document.querySelectorAll('pre code.hljs');
-    Array.prototype.forEach.call(blocks, function (block) {
-      var language = block.result.language;
-      block.insertAdjacentHTML('afterbegin', `<label>${language}</label>`);
-    });
-  });
+  useEffect(formatCodeBlocks);
 
   const post = posts.find(x => x.slug === slug);
 
