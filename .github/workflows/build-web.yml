@@ -1,0 +1,58 @@
+name: Build Web
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - components/**
+      - pages/**
+      - public/**
+      - syltes/**
+      - tsconfig.json
+      - posts.json
+      - package*.json
+      - postcss.config.js
+      - tailwind.config.js
+      - .github/workflows/build-web.yml
+
+env:
+  BUCKET_NAME: blog-prod-websitebucket-1iqzg3r4i7xdz
+  DISTRIBUTION_ID: E2PXYKBG0NUI4F
+  
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy
+        run: |
+          aws s3 sync --cache-control 'max-age=604800' --exclude index.html dist s3://$BUCKET_NAME
+          aws s3 sync --cache-control 'no-cache' dist s3://$BUCKET_NAME
+          aws cloudfront create-invalidation --distribution-id=$DISTRIBUTION_ID --paths / /js/* /css/* /img/*
+
+      - uses: Brymastr/slack-action@v1
+        name: Slack notification
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          template: "./.github/workflows/build.json"
+          job_status: ${{ job.status }}
