@@ -6,13 +6,10 @@ import { format } from 'date-fns';
 import HomeButton from '../../../components/HomeButton';
 import Error404Page from '../../../components/Error404Page';
 import styles from '../../../styles/Post.module.scss';
-import { registerLanguage, highlightAll } from 'highlight.js';
-import shell from 'highlight.js/lib/languages/shell';
-import 'highlight.js/styles/tomorrow-night-eighties.css';
-registerLanguage('shell', shell);
+import highlightCode from '../../../components/Highlight';
 
 function formatCodeBlocks() {
-  highlightAll();
+  highlightCode();
   const blocks = document.querySelectorAll('pre code.hljs');
   Array.prototype.forEach.call(blocks, function (block) {
     const language = block.result.language;
