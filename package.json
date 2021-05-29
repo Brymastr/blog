@@ -1,16 +1,25 @@
 {
   "name": "blog",
-  "version": "1.0.0",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "deploy": "NODE_ENV=production ./scripts/deploy",
-    "login": "cd infrastructure && ./login"
+    "dev": "next dev",
+    "build": "next build && next export -o dist",
+    "start": "next start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/brymastr/blog.git"
+  "dependencies": {
+    "date-fns": "^2.22.1",
+    "next": "10.2.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
-  "keywords": ["Docker", "Terraform"],
-  "author": "Brycen Dorsay <dorsay@live.ca>",
-  "license": "GPL",
-  "homepage": "https://github.com/brymastr/blog#readme"
+  "devDependencies": {
+    "@types/node": "^15.6.1",
+    "@types/react": "^17.0.8",
+    "@types/react-dom": "^17.0.5",
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.0",
+    "tailwindcss": "^2.1.2",
+    "typescript": "^4.3.2"
+  }
 }

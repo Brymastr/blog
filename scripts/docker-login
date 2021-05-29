@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-docker login docker.pkg.github.com --username brymastr

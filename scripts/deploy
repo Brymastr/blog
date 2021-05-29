@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-docker context use blog
-
-./scripts/compose pull
-
-./scripts/compose up "-d"

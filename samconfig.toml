@@ -1,0 +1,10 @@
+version = 0.1
+[dev]
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "blog-dev"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-9hep6u2wm2mb"
+s3_prefix = "blog-dev"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "HostedZoneId=\"Z0679283YUT0L3YGMAA0\" DomainName=\"dev.dorsay.dev\""

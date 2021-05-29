@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+export AWS_PROFILE=personal
+export AWS_REGION=us-east-1
+export BUCKET_NAME=blog-dev-websitebucket-nrovuqr6irg
+export DISTRIBUTION_ID=E1U0MGLVOVFLHZ
+
+template() {
+    echo "Building and deploying Cloudformation template"
+
+    sam build
+
+    sam deploy --config-env dev
+}
+
+web() {
+    echo "Building and deploying website"
+    npm run build
+    aws s3 sync --cache-control 'max-age=604800' --exclude index.html dist s3://$BUCKET_NAME
+    aws s3 sync --cache-control 'no-cache' dist s3://$BUCKET_NAME
+    aws cloudfront create-invalidation --distribution-id=$DISTRIBUTION_ID --paths / /post/*
+}
+
+
+[[ -z $1 || "$1" == "template" ]] && template
+
+[[ -z $1 || "$1" == "web" ]] && web

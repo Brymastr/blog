@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-terraform apply \
-  -var-file='../env/secrets.tfvars'

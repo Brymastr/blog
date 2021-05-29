@@ -1,0 +1,117 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: My Blog
+
+Parameters:
+  HostedZoneId:
+    Description: hosted zone for domain name
+    Type: String
+
+  DomainName:
+    Description: domain name
+    Type: String
+
+Resources:
+  Certificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      ValidationMethod: DNS
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          HostedZoneId: !Ref HostedZoneId
+
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebsiteBucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action:
+              - s3:PutObject
+              - s3:PutObjectAcl
+              - s3:Get*
+              - s3:List*
+              - s3:DeleteObject
+            Resource:
+              - !Sub "arn:aws:s3:::${WebsiteBucket}"
+              - !Sub "arn:aws:s3:::${WebsiteBucket}/*"
+            Principal:
+              CanonicalUser: !GetAtt CloudFrontOriginAccessIdentity.S3CanonicalUserId
+              AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}"
+  
+  CloudFrontOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: "Serverless website OA"
+
+  CloudfrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !Ref DomainName
+        ViewerCertificate:
+          AcmCertificateArn: !Ref Certificate
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: TLSv1.2_2019
+        DefaultRootObject: index.html
+        Enabled: true
+        HttpVersion: http2
+        CustomErrorResponses:
+          - ErrorCode: 400
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 404
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 405
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 414
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+          - ErrorCode: 416
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          ForwardedValues:
+            QueryString: true
+          Compress: true
+          TargetOriginId: s3-website
+          ViewerProtocolPolicy: redirect-to-https
+        Origins:
+          - Id: s3-website
+            DomainName: !GetAtt WebsiteBucket.DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
+
+Outputs:
+  WebsiteBucketName:
+    Description: Bucket name
+    Value: !Ref WebsiteBucket
+  WebsiteBucketDomainName:
+    Description: Bucket domain
+    Value: !GetAtt WebsiteBucket.DomainName
+  CloudFrontDistributionURL:
+    Description: CloudFront URL for the website
+    Value: !Join
+      - ""
+      - - "https://"
+        - !GetAtt CloudfrontDistribution.DomainName
