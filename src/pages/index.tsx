@@ -1,41 +1,9 @@
 import Head from 'next/head';
-import PostListItem from '../components/PostListItem';
 import FooterEnd from '../components/FooterEnd';
 import allPosts from '../../posts.json';
+import PostList from '../components/PostList';
 import React from 'react';
 import Link from 'next/link';
-
-interface IPost {
-  title: string;
-  slug: string;
-  content: string;
-  preview: string;
-  created_at: string;
-  updated_at: string;
-  published_at: string | null;
-}
-
-function sortPosts(a: IPost, b: IPost) {
-  if (a.published_at === null || b.published_at === null) return 0;
-  return a.published_at > b.published_at ? -1 : 1;
-}
-
-function PostsList() {
-  const today = new Date().toISOString();
-  const posts = allPosts as IPost[];
-  const sortedPosts = posts
-    .filter(({ published_at }: IPost) => published_at !== null && published_at <= today)
-    .sort(sortPosts);
-
-  const postList = sortedPosts.map(({ title, published_at, preview, slug }, i) => (
-    <div key={i}>
-      <hr className="solid"></hr>
-      <PostListItem title={title} date={published_at as string} preview={preview} slug={slug} />
-    </div>
-  ));
-
-  return <div>{postList}</div>;
-}
 
 export default function Home() {
   const linkedin = 'https://www.linkedin.com/in/brycen/';
@@ -63,7 +31,7 @@ export default function Home() {
       </header>
 
       <main className="max-w-screen-sm mx-auto px-3">
-        <PostsList />
+        <PostList posts={allPosts} />
         <hr className="solid"></hr>
       </main>
 
