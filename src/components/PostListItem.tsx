@@ -1,7 +1,6 @@
-import React, { FunctionComponent } from 'react';
 import { format } from 'date-fns';
 import Link from 'next/link';
-import styles from '../styles/PostListItem.module.scss';
+import styles from 'styles/PostListItem.module.scss';
 
 type Props = {
   title: string;
@@ -10,7 +9,7 @@ type Props = {
   date: string;
 };
 
-const PostListItem: FunctionComponent<Props> = ({ title, date, preview, slug }) => {
+const PostListItem = ({ title, date, preview, slug }: Props) => {
   const formattedDate = format(new Date(date), 'dd MMM yyyy');
 
   return (

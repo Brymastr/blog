@@ -1,5 +1,6 @@
 import axios from 'axios';
 import fs from 'fs';
+import { Post } from './src/types';
 const apiKey = 'cb46c887b243709676bd1712e0';
 const url = `http://localhost:3001/ghost/api/v3/content/posts?key=${apiKey}`;
 
@@ -32,16 +33,6 @@ interface GhostPost {
   og_description: string | null;
   meta_title: string | null;
   meta_description: string | null;
-}
-
-interface Post {
-  title: string;
-  slug: string;
-  content: string;
-  preview: string;
-  created_at: string;
-  updated_at: string;
-  published_at: string | null;
 }
 
 function normalize(ghostPost: GhostPost) {

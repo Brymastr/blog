@@ -1,9 +1,8 @@
 import Head from 'next/head';
-import FooterEnd from '../components/FooterEnd';
-import allPosts from '../../posts.json';
-import PostList from '../components/PostList';
-import React from 'react';
+import FooterEnd from 'components/FooterEnd';
+import PostList from 'components/PostList';
 import Link from 'next/link';
+import allPosts from '../../posts.json';
 
 export default function Home() {
   const linkedin = 'https://www.linkedin.com/in/brycen/';

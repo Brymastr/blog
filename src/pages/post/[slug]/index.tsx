@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
-import posts from '../../../posts.json';
+import posts from '../../../../posts.json';
 import React, { useEffect } from 'react';
-import FooterEnd from '../../../components/FooterEnd';
+import FooterEnd from 'components/FooterEnd';
 import { format } from 'date-fns';
-import HomeButton from '../../../components/HomeButton';
-import Error404Page from '../../../components/Error404Page';
-import styles from '../../../styles/Post.module.scss';
-import formatCodeBlocks from '../../../components/Highlight';
+import HomeButton from 'components/HomeButton';
+import Error404Page from 'components/Error404Page';
+import styles from 'styles/Post.module.scss';
+import formatCodeBlocks from 'components/Highlight';
 
 type PostProps = {
   title: string;

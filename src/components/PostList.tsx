@@ -1,4 +1,4 @@
-import { Post } from '../types';
+import { Post } from 'types';
 import React from 'react';
 import PostListItem from './PostListItem';
 
