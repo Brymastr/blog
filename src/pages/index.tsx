@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import PostListItem from '../components/PostListItem';
 import FooterEnd from '../components/FooterEnd';
-import allPosts from '../posts.json';
+import allPosts from '../../posts.json';
 import React from 'react';
 import Link from 'next/link';
 

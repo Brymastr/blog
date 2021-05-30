@@ -64,7 +64,7 @@ async function main() {
 
   const stringified = JSON.stringify(normalizedPosts, null, 2);
 
-  fs.writeFileSync('posts_from_ghost.json', stringified);
+  fs.writeFileSync('posts.json', stringified);
 }
 
 main();

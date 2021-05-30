@@ -6,8 +6,6 @@ sleep 2
 
 sensible-browser "http://localhost:3001/ghost/#/posts"
 
-# docker attach $dockerContainerId
-
 function cleanup {
   echo -e "\nExporting posts and stopping Ghost..."
 
