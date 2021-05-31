@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+touch posts.json
+
 docker-compose up -d --build
 
 sleep 2
@@ -10,6 +12,7 @@ docker attach blog_webhook_1
 
 function cleanup {
   docker-compose down
+  rm posts.json
 }
 
 trap cleanup EXIT

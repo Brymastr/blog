@@ -3,8 +3,9 @@ import fetchPosts from './fetchPosts';
 import fs from 'fs';
 import createToken from './createToken';
 import axios from 'axios';
+import { setTimeout as sleep } from 'timers/promises';
 
-const apiKey = '60b2b67558ff3300016f3d85:71f1b62b09d510462c002dd02ad68f0a742d0da7dd30c669a043b35c676489bd';
+const apiKey = process.env.API_KEY;
 const baseURL = `http://ghost:2368/ghost/api/v3/admin`;
 
 const token = createToken(apiKey);
@@ -17,10 +18,17 @@ const client = axios.create({
 });
 
 async function writePosts() {
-  const posts = await fetchPosts(client);
-  const stringified = JSON.stringify(posts, null, 2);
+  for (let i = 0; i < 10; i++) {
+    try {
+      const posts = await fetchPosts(client);
+      const stringified = JSON.stringify(posts, null, 2);
 
-  fs.writeFileSync('posts.json', stringified);
+      fs.writeFileSync('posts.json', stringified);
+    } catch (err) {
+      if (i === 9) console.error('Error getting posts');
+      else await sleep(i * 100);
+    }
+  }
 }
 
 const handler: RequestListener = async function handler(_, res) {
@@ -35,4 +43,4 @@ const handler: RequestListener = async function handler(_, res) {
 const server = createServer(handler);
 server.listen(80);
 console.log('Listening for webhooks on 80');
-setTimeout(() => writePosts(), 2000);
+writePosts();

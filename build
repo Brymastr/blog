@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
+export NODE_ENV=production
+
+touch posts.json
+
 docker-compose up -d --build
 
 sleep 5
 
 docker-compose down
 
-cat posts.json
-
 next build
 next export -o dist
+
+rm posts.json
