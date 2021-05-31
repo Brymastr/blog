@@ -9,7 +9,7 @@ docker-compose up -d --build
 sleep 1
 
 attempts=0
-maxAttempts=100
+maxAttempts=25
 while ! [ -s "posts.json" ] && [ $attempts -lt $maxAttempts ]; do
   ((attempts=attempts+1))
   echo "waiting for posts to be exported..."
@@ -18,6 +18,5 @@ done
 
 docker-compose logs
 docker-compose stop
-
 
 next build && next export -o dist
