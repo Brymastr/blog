@@ -18,10 +18,10 @@ done
 
 echo "got posts"
 
-line=$(head -n 3 posts.json)
+FILESIZE=$(stat -c%s posts.json)
 
-echo $line
+echo $FILESIZE
 
 docker-compose down
 
-next build &&  next export -o dist
+# next build &&  next export -o dist
