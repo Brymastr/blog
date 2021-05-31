@@ -6,21 +6,17 @@ rm -f posts.json && touch posts.json
 
 docker-compose up -d --build
 
-sleep 30
+sleep 1
 
 attempts=0
 maxAttempts=25
 while ! [ -s "posts.json" ] && [ $attempts -le $maxAttempts ]; do
   attempts+=1
   echo "waiting for posts to be exported..."
-  sleep 5
+  sleep 1
 done
 
-
-[ -s "posts.json" ] && echo "got posts"
-cat posts.json
-
 docker-compose logs --no-color >& logs.txt
-docker-compose down
+docker-compose stop
 
 next build && next export -o dist
