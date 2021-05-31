@@ -22,8 +22,8 @@ async function writePosts() {
     try {
       const posts = await fetchPosts(client);
       const stringified = JSON.stringify(posts, null, 2);
-
       fs.writeFileSync('posts.json', stringified);
+      break;
     } catch (err) {
       if (i === 9) console.error('Error getting posts');
       else await sleep(i * 100);
@@ -40,7 +40,10 @@ const handler: RequestListener = async function handler(_, res) {
   res.end(JSON.stringify({ message: 'Success' }));
 };
 
-const server = createServer(handler);
-server.listen(80);
-console.log('Listening for webhooks on 80');
-writePosts();
+async function main() {
+  await writePosts();
+  const server = createServer(handler);
+  server.listen(80);
+  console.log('Listening for webhooks on 80');
+}
+main();

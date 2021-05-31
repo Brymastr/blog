@@ -41,3 +41,6 @@ archive/
 /ghost/settings
 /ghost/themes
 posts.json
+
+# logs
+/logs.txt
