@@ -1,13 +1,13 @@
 import { useEffect, useState, useContext } from 'react';
-import { SettingsContext, toggleUnpublishedAction } from 'context/Settings';
+import { SettingsContext, ActionType } from 'context/Settings';
 
 export default function useKeylog() {
   const [state, setState] = useState<string[]>([]);
-  // const { setUnpublished } = useSettings();
-  const { unpublished } = useContext(SettingsContext);
+  const { dispatch } = useContext(SettingsContext);
 
   function brycenTyped() {
-    // toggleUnpublishedAction();
+    console.log('brycen');
+    dispatch({ type: ActionType.ToggleUnpublished });
   }
 
   const joined = state.join('');

@@ -1,9 +1,7 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import FooterEnd from 'components/FooterEnd';
 import PostList from 'components/PostList';
-import Link from 'next/link';
-import { useContext } from 'react';
-import { SettingsContext } from 'context/Settings';
 import useKeylog from 'components/Keylog';
 
 import allPosts from '../../posts.json';
@@ -12,11 +10,7 @@ export default function Home() {
   const linkedin = 'https://linkedin.com/in/brycen/';
   const github = 'https://github.com/Brymastr';
 
-  // useKeylog();
-
-  const { unpublished } = useContext(SettingsContext);
-
-  console.log(unpublished);
+  useKeylog();
 
   return (
     <div>
