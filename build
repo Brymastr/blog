@@ -16,9 +16,9 @@ while ! [ -s "posts.json" ] && [ $attempts -le $maxAttempts ]; do
   sleep 1
 done
 
-cat posts.json
 
-echo "got posts"
+[ -s "posts.json" ] && echo "got posts"
+cat posts.json
 
 docker-compose logs --no-color >& logs.txt
 docker-compose down
