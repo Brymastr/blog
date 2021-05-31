@@ -6,5 +6,7 @@ sleep 5
 
 docker-compose down
 
+cat posts.json
+
 next build
 next export -o dist
