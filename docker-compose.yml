@@ -14,5 +14,5 @@ services:
     build: webhook
     hostname: webhook.local
     volumes:
-      - $PWD/posts_from_ghost.json:/home/node/posts.json
+      - $PWD/posts.json:/home/node/posts.json
     init: true

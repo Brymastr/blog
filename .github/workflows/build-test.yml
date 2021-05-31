@@ -1,0 +1,39 @@
+name: Build Web
+
+on:
+  push:
+    branches:
+      - test
+    paths:
+      - src/**
+      - public/**
+      - tsconfig.json
+      - package*.json
+      - postcss.config.js
+      - tailwind.config.js
+      - .github/workflows/build-web.yml
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Log
+        run: cat posts.json
+
+      - uses: Brymastr/slack-action@v1
+        name: Slack notification
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        with:
+          template: "./.github/workflows/build.json"
+          job_status: ${{ job.status }}

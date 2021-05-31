@@ -5,12 +5,9 @@ on:
     branches:
       - main
     paths:
-      - components/**
-      - pages/**
+      - src/*
       - public/**
-      - syltes/**
       - tsconfig.json
-      - posts.json
       - package*.json
       - postcss.config.js
       - tailwind.config.js

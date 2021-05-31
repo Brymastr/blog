@@ -35,3 +35,4 @@ const handler: RequestListener = async function handler(_, res) {
 const server = createServer(handler);
 server.listen(80);
 console.log('Listening for webhooks on 80');
+setTimeout(() => writePosts(), 2000);

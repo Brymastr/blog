@@ -1,11 +1,10 @@
 {
   "name": "blog",
   "version": "1.0.0",
-  "private": false,
   "scripts": {
     "dev": "NODE_ENV=development next dev",
-    "build": "next build && next export -o dist",
-    "start": "next start",
+    "build": "./build",
+    "start": "next start -H localhost -p 3000",
     "editor": "./start-editor"
   },
   "dependencies": {
