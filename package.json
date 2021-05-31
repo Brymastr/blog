@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "NODE_ENV=development next dev",
     "build": "./build",
+    "deploy": "./deploy",
     "start": "next start -H localhost -p 3000",
     "editor": "./start-editor"
   },
