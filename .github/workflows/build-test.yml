@@ -4,14 +4,6 @@ on:
   push:
     branches:
       - test
-    paths:
-      - src/**
-      - public/**
-      - tsconfig.json
-      - package*.json
-      - postcss.config.js
-      - tailwind.config.js
-      - .github/workflows/build-web.yml
 
 jobs:
   build-and-deploy:
