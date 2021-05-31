@@ -16,7 +16,7 @@ while ! [ -s "posts.json" ] && [ $attempts -lt $maxAttempts ]; do
   sleep 1
 done
 
-# docker-compose logs
+docker-compose logs
 docker-compose stop
 
 next build && next export -o dist
