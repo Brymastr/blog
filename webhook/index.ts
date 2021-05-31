@@ -19,7 +19,7 @@ const client = axios.create({
 });
 
 async function writePosts() {
-  const maxAttempts = 20;
+  const maxAttempts = 100;
   for (let i = 0; i < maxAttempts; i++) {
     try {
       const posts = await fetchPosts(client);
@@ -27,6 +27,7 @@ async function writePosts() {
       fs.writeFileSync('posts.json', stringified);
       break;
     } catch (err) {
+      console.log(err);
       if (i >= maxAttempts - 1) console.error('Error getting posts');
       else await sleep(i * 100);
     }
