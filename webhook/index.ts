@@ -20,7 +20,7 @@ const client = axios.create({
 
 async function writePosts(posts: Post[]) {
   const stringified = JSON.stringify(posts, null, 2);
-  fs.writeFileSync('posts/posts.json', stringified);
+  fs.writeFileSync('posts.json', stringified);
 }
 
 const handler: RequestListener = async function handler(_, res) {

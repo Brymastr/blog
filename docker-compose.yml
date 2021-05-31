@@ -14,7 +14,7 @@ services:
     build: webhook
     hostname: webhook.local
     volumes:
-      - $PWD/posts.json:/home/node/posts/posts.json
+      - $PWD/posts.json:/home/node/posts.json
     init: true
     environment:
       API_KEY: $API_KEY

@@ -2,7 +2,7 @@
 
 export NODE_ENV=production
 
-rm -f posts.json && touch posts.json
+rm -f posts.json && touch posts.json && chmod 777 posts.json
 
 docker-compose up -d --build
 
