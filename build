@@ -8,21 +8,15 @@ docker-compose up -d --build
 
 sleep 1
 
-function getFileSize {
-  fileSize=$(wc -c posts.json | awk '{print $1}')
-  echo $fileSize
-}
-
 attempts=0
 maxAttempts=25
-while ! [ -s posts.json ] && [ $attempts -le $maxAttempts ]; do
-  getFileSize
+while ! [ -s "posts.json" ] && [ $attempts -le $maxAttempts ]; do
   attempts+=1
   echo "waiting for posts to be exported..."
   sleep 1
 done
 
-getFileSize
+cat posts.json
 
 echo "got posts"
 
