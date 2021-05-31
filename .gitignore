@@ -13,9 +13,6 @@ node_modules
 /out/
 /dist/
 
-# production
-/build
-
 # misc
 .DS_Store
 *.pem
@@ -43,3 +40,7 @@ archive/
 /ghost/logs
 /ghost/settings
 /ghost/themes
+posts.json
+
+# logs
+/logs.txt

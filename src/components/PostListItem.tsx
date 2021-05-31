@@ -4,7 +4,7 @@ import styles from 'styles/PostListItem.module.scss';
 
 type Props = {
   title: string;
-  preview: string;
+  preview: string | null;
   slug: string;
   date: string;
 };

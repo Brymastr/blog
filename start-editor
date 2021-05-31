@@ -1,26 +1,17 @@
 #!/usr/bin/env bash
 
+touch posts.json
+
 docker-compose up -d --build
-
-# ghostContainerId=$(docker run -d --rm --name local-ghost -e url=http://localhost:3001 -p 3001:2368 -v $(pwd)/ghost:/var/lib/ghost/content ghost:alpine)
-
-# docker build -t blog-webhook -q webhook
-
-# webhookContainerId=$(docker run -d --rm --name blog-webhook -p 3002:80 blog-webhook)
 
 sleep 2
 
 sensible-browser "http://localhost:3001/ghost/#/posts"
 
-# docker attach $webhookContainerId
-# docker attach $ghostContainerId
 docker attach blog_webhook_1
 
 function cleanup {
-  # docker stop local-ghost
-  # docker stop blog-webhook
   docker-compose down
 }
-
 
 trap cleanup EXIT
