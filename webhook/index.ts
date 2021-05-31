@@ -9,6 +9,7 @@ const apiKey = process.env.API_KEY;
 const baseURL = `http://ghost:2368/ghost/api/v3/admin`;
 
 const token = createToken(apiKey);
+console.log(token);
 
 const client = axios.create({
   baseURL,
@@ -18,14 +19,15 @@ const client = axios.create({
 });
 
 async function writePosts() {
-  for (let i = 0; i < 10; i++) {
+  const maxAttempts = 20;
+  for (let i = 0; i < maxAttempts; i++) {
     try {
       const posts = await fetchPosts(client);
       const stringified = JSON.stringify(posts, null, 2);
       fs.writeFileSync('posts.json', stringified);
       break;
     } catch (err) {
-      if (i === 9) console.error('Error getting posts');
+      if (i >= maxAttempts - 1) console.error('Error getting posts');
       else await sleep(i * 100);
     }
   }
