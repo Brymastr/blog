@@ -12,7 +12,7 @@ attempts=0
 maxAttempts=25
 while ! [ -s posts.json ] && [ $attempts -le $maxAttempts ]; do
   attempts+=1
-  echo "no posts"
+  echo "waiting for posts to be exported..."
   sleep 1
 done
 
@@ -20,7 +20,7 @@ echo "got posts"
 
 cat posts.json
 
-docker-compose down
-
 next build
 next export -o dist
+
+docker-compose down
