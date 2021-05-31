@@ -18,9 +18,10 @@ done
 
 echo "got posts"
 
-cat posts.json
+line=$(head -n 3 posts.json)
 
-next build
-next export -o dist
+echo $line
 
 docker-compose down
+
+next build &&  next export -o dist
