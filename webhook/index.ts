@@ -24,8 +24,7 @@ async function writePosts() {
     try {
       const posts = await fetchPosts(client);
       const stringified = JSON.stringify(posts, null, 2);
-      // fs.writeFileSync('posts.json', stringified);
-      fs.writeFileSync('/home/node/posts.json', 'random text to put in the file');
+      fs.writeFileSync('posts.json', stringified);
       break;
     } catch (err) {
       if (i >= maxAttempts - 1) console.error('Error getting posts');

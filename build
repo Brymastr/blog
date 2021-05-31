@@ -13,7 +13,7 @@ maxAttempts=25
 while ! [ -s "posts.json" ] && [ $attempts -le $maxAttempts ]; do
   attempts+=1
   echo "waiting for posts to be exported..."
-  sleep 1
+  sleep 5
 done
 
 
