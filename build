@@ -8,6 +8,8 @@ docker-compose up -d --build
 
 sleep 10
 
+cat posts.json
+
 docker-compose down
 
 next build
