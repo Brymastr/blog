@@ -23,4 +23,4 @@ cat posts.json
 docker-compose logs --no-color >& logs.txt
 docker-compose down
 
-# next build && next export -o dist
+next build && next export -o dist
