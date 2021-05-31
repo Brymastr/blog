@@ -2,13 +2,18 @@
 
 export NODE_ENV=production
 
-touch posts.json
+rm posts.json && touch posts.json
 
 docker-compose up -d --build
 
-sleep 10
+sleep 1
 
-cat posts.json
+while ! [ -s posts.json ]; do
+  echo "no posts"
+  sleep 1
+done
+
+echo "got posts"
 
 docker-compose down
 
