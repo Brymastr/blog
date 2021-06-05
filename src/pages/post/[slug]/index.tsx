@@ -50,7 +50,9 @@ const Post = () => {
   if (!post) {
     element = Error404Page();
   } else {
-    const date = format(new Date(post.published_at as string), 'dd MMM yyyy');
+    let date: string;
+    if (post.published_at) date = format(new Date(post.published_at), 'dd MMM yyyy');
+    else date = 'Draft';
     const { title, content } = post;
 
     element = PostPage({ title, date, content });

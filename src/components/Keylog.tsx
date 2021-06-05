@@ -1,18 +1,18 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { SettingsContext, ActionType } from 'context/Settings';
 
 export default function useKeylog() {
-  const [state, setState] = useState<string[]>([]);
+  let state: string[] = [];
   const { dispatch } = useContext(SettingsContext);
 
-  function brycenTyped() {
-    console.log('brycen');
-    dispatch({ type: ActionType.ToggleUnpublished });
+  function reset() {
+    state = [];
   }
 
-  const joined = state.join('');
-  if (joined.slice(-6) === 'brycen') {
-    brycenTyped();
+  function adminTyped() {
+    console.log('admin');
+    dispatch({ type: ActionType.ToggleUnpublished });
+    reset();
   }
 
   function updateKeylog(key: string) {
@@ -22,14 +22,20 @@ export default function useKeylog() {
       currentState = state.slice(1, state.length);
     }
 
-    setState([...currentState, key]);
+    state = [...currentState, key];
+
+    const joined = state.join('');
+
+    if (joined.slice(-5) === 'admin') {
+      adminTyped();
+    }
   }
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => updateKeylog(e.key);
     window.addEventListener('keypress', handler);
     return () => window.removeEventListener('keypress', handler);
-  });
+  }, []);
 
   return null;
 }

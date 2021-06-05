@@ -31,6 +31,7 @@ export interface GhostPost {
   excerpt: string;
   reading_time: number;
   access: boolean;
+  status: 'published' | 'draft';
   send_email_when_published: false;
   og_image: string | null;
   og_title: string | null;

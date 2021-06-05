@@ -10,7 +10,7 @@ function normalize(ghostPost: GhostPost) {
     preview: ghostPost.custom_excerpt,
     created_at: ghostPost.created_at,
     updated_at: ghostPost.updated_at,
-    published_at: ghostPost.published_at,
+    published_at: ghostPost.status === 'published' ? ghostPost.published_at : null,
   };
 
   return post;
