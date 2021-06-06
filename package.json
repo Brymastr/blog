@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "NODE_ENV=development next dev",
-    "build": "./build",
+    "build": "rimraf dist && rimraf .next && ./build",
     "deploy": "./deploy",
     "start": "next start -H localhost -p 3000",
     "editor": "./start-editor"
@@ -22,6 +22,7 @@
     "@types/react-dom": "^17.0.5",
     "autoprefixer": "^10.2.6",
     "postcss": "^8.3.0",
+    "rimraf": "^3.0.2",
     "sass": "^1.34.0",
     "tailwindcss": "^2.1.2",
     "ts-node": "^10.0.0",

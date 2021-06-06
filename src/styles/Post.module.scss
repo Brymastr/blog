@@ -1,8 +1,11 @@
 .post {
   p,
   pre {
-    margin-bottom: 2em;
     position: relative;
+  }
+
+  p {
+    margin-bottom: 2em;
   }
 
   pre > code {
@@ -78,6 +81,13 @@
   }
 
   figure {
+    margin-bottom: 2em;
+
+    figcaption {
+      text-align: center;
+      display: none;
+    }
+
     border-radius: 10px;
     border: grey solid 1px;
     @apply transition-colors;
