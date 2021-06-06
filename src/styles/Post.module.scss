@@ -2,9 +2,6 @@
   p,
   pre {
     position: relative;
-  }
-
-  p {
     margin-bottom: 2em;
   }
 
@@ -85,8 +82,12 @@
 
     figcaption {
       text-align: center;
-      display: none;
+      margin-top: -2em;
     }
+  }
+
+  [class~='kg-bookmark-card'] {
+    margin-bottom: 2em;
 
     border-radius: 10px;
     border: grey solid 1px;
