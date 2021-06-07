@@ -13,6 +13,8 @@ services:
   webhook:
     build: webhook
     hostname: webhook.local
+    ports:
+      - '3002:80'
     volumes:
       - $PWD/posts.json:/home/node/posts.json
     init: true
