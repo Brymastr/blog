@@ -3,12 +3,16 @@ import Link from 'next/link';
 import FooterEnd from 'components/FooterEnd';
 import PostList from 'components/PostList';
 import useKeylog from 'components/Keylog';
+import { useContext } from 'react';
+import { SettingsContext } from 'context/Settings';
 
 import allPosts from '../../posts.json';
 
 export default function Home() {
   const linkedin = 'https://linkedin.com/in/brycen/';
   const github = 'https://github.com/Brymastr';
+
+  const { state: settingsState } = useContext(SettingsContext);
 
   useKeylog();
 
@@ -21,7 +25,7 @@ export default function Home() {
       </Head>
 
       <header className="flex flex-col items-center py-24">
-        <h1 className="text-5xl font-bold">Brycen Dorsay</h1>
+        <h1 className={`text-5xl font-bold ${settingsState.unpublished && 'text-red-400'}`}>Brycen Dorsay</h1>
         <h2 className="text-2xl py-2">Software Engineering</h2>
         <div className="flex justify-between w-32 pt-10">
           <Link href={linkedin}>

@@ -1,5 +1,5 @@
 import { Post } from 'types';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import PostListItem from './PostListItem';
 import { SettingsContext } from 'context/Settings';
 

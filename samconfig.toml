@@ -7,6 +7,7 @@ s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-9hep6u2wm2mb"
 s3_prefix = "blog-dev"
 region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
+fail_on_empty_changeset=false
 parameter_overrides = "HostedZoneId=\"Z05558683FC949RPHCKBP\" DomainName=\"dev.dorsay.dev\""
 
 [prod]
@@ -17,4 +18,5 @@ s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-9hep6u2wm2mb"
 s3_prefix = "blog-prod"
 region = "us-east-1"
 capabilities = "CAPABILITY_IAM"
+fail_on_empty_changeset=false
 parameter_overrides = "HostedZoneId=\"Z05558683FC949RPHCKBP\" DomainName=\"dorsay.dev\""
