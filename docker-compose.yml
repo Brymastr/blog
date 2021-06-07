@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  ghost:
+    image: ghost:alpine
+    ports:
+      - '3001:2368'
+    volumes:
+      - $PWD/ghost:/var/lib/ghost/content
+    environment:
+      url: http://localhost:3001
+
+  webhook:
+    build: webhook
+    hostname: webhook.local
+    volumes:
+      - $PWD/posts.json:/home/node/posts.json
+    init: true
+    environment:
+      API_KEY: $API_KEY

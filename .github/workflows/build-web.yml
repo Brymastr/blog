@@ -5,15 +5,10 @@ on:
     branches:
       - main
     paths:
-      - components/**
-      - pages/**
+      - src/**
       - public/**
-      - syltes/**
-      - tsconfig.json
-      - posts.json
-      - package*.json
-      - postcss.config.js
-      - tailwind.config.js
+      - "*.json"
+      - "*.config.js"
       - .github/workflows/build-web.yml
 
 env:
@@ -47,10 +42,11 @@ jobs:
         run: |
           aws s3 sync --cache-control 'max-age=604800' --exclude index.html dist s3://$BUCKET_NAME
           aws s3 sync --cache-control 'no-cache' dist s3://$BUCKET_NAME
-          aws cloudfront create-invalidation --distribution-id=$DISTRIBUTION_ID --paths / /js/* /css/* /img/*
+          aws cloudfront create-invalidation --distribution-id=$DISTRIBUTION_ID --paths / /post/*
 
       - uses: Brymastr/slack-action@v1
         name: Slack notification
+        if: ${{ always() }}
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         with:

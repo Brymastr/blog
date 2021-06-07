@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+touch posts.json
+
+docker-compose up -d --build
+
+sleep 2
+
+sensible-browser "http://localhost:3001/ghost/#/posts"
+
+docker-compose logs webhook
+
+docker attach blog_webhook_1
+
+function cleanup {
+  docker-compose down
+}
+
+trap cleanup EXIT

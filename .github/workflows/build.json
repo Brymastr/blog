@@ -29,7 +29,7 @@
         },
         {
           "type": "mrkdwn",
-          "text": "*Build Number:*\n<{{ run_number }}>"
+          "text": "*Build Number:*\n{{ run_number }}"
         },
         {
           "type": "mrkdwn",

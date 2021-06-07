@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 export AWS_PROFILE=personal
 export AWS_REGION=us-east-1
 export BUCKET_NAME=blog-dev-websitebucket-nrovuqr6irg
