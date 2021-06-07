@@ -86,6 +86,11 @@
     }
   }
 
+  [class~='kg-image-card'] img {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   [class~='kg-bookmark-card'] {
     margin-bottom: 2em;
 
