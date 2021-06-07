@@ -1,4 +1,4 @@
-import { registerLanguage, highlightAll } from 'highlight.js/lib/core';
+import { highlightAll, registerLanguage } from 'highlight.js';
 import shell from 'highlight.js/lib/languages/shell';
 import bash from 'highlight.js/lib/languages/bash';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -16,11 +16,13 @@ registerLanguage('html', html);
 registerLanguage('yaml', yaml);
 registerLanguage('json', json);
 
-export default function highlight() {
+export default function highlightt() {
   highlightAll();
-  const blocks = document.querySelectorAll('pre code.hljs');
+  const blocks = document.querySelectorAll<HighlightedHTMLElement>('pre code.hljs');
   blocks.forEach(block => {
-    const language = block.result.language;
+    if (block.result === undefined) return;
+    const result = block.result as HighlightResult;
+    const language = result.language;
     if (language != undefined) block.insertAdjacentHTML('afterbegin', `<label>${language}</label>`);
   });
 }
