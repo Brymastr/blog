@@ -17,7 +17,7 @@ export default function Home() {
   useKeylog();
 
   return (
-    <div>
+    <>
       <Head>
         <title>Brycen Dorsay | dorsay.dev</title>
         <meta name="description" content="dorsay.dev | Brycen Dorsay | Software Developer" />
@@ -46,6 +46,6 @@ export default function Home() {
         <p className="text-center pt-16">Page 1 of 1</p>
         <FooterEnd />
       </footer>
-    </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 module.exports = {
   purge: ['./src/**/*.{js,ts,jsx,tsx}'],
   mode: 'jit',
-  darkMode: false, // or 'media' or 'class'
+  darkMode: 'media', // or 'media' or 'class'
   theme: {
     container: {
       screens: {
@@ -10,7 +10,13 @@ module.exports = {
         lg: '768px',
       },
     },
-    extend: {},
+    extend: {
+      colors: {
+        gray: {
+          900: '#0f1218',
+        },
+      },
+    },
   },
   variants: {
     extend: {},
