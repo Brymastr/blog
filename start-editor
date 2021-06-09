@@ -6,7 +6,17 @@ docker-compose up -d --build
 
 sleep 2
 
-sensible-browser "http://localhost:3001/ghost/#/posts"
+postsUrl="http://localhost:3001/ghost/#/posts"
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  sensible-browser $postsUrl
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  open $postsUrl
+else
+  echo What... windows? lol
+  exit 1
+fi
+
 
 docker-compose logs webhook
 
