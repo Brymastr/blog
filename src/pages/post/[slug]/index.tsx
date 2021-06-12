@@ -29,11 +29,17 @@ function addDataTextAttr(content: string) {
   return modifiedContent;
 }
 
+function rewriteImageUrls(content: string) {
+  return content.replace(/http:\/\/localhost:3001\/content/g, '');
+}
+
 const PostPage = ({ title, date, content }: PostProps) => {
   const readTime = Math.round(content.split(' ').length / 200);
   const meta = readTime >= 1 ? `${date} | ${readTime} min read` : date;
 
-  const modifiedContent = addDataTextAttr(content);
+  const modifiedHyperlinks = addDataTextAttr(content);
+  const modifiedImages = rewriteImageUrls(modifiedHyperlinks);
+  const modifiedContent = modifiedImages;
 
   return (
     <>

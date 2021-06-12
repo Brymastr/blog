@@ -25,6 +25,8 @@ while ! [ -s "posts.json" ] && [ $attempts -lt $maxAttempts ]; do
   sleep 1
 done
 
-[ "$ALREADY_RUNNING" = "" ] && docker-compose stop
+[ "$ALREADY_RUNNING" = "" ] && docker-compose down
+
+cp -r ghost/images public/
 
 next build && next export -o dist

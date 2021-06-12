@@ -40,7 +40,8 @@ archive/
 /ghost/logs
 /ghost/settings
 /ghost/themes
-posts.json
+/posts.json
+/public/images
 
 # logs
 /logs.txt
