@@ -6,7 +6,7 @@ import useKeylog from 'components/Keylog';
 import { useContext } from 'react';
 import { SettingsContext } from 'context/Settings';
 
-import allPosts from '../../posts.json';
+import posts from 'posts';
 
 export default function Home() {
   const linkedin = 'https://linkedin.com/in/brycen/';
@@ -38,7 +38,7 @@ export default function Home() {
       </header>
 
       <main className="max-w-screen-sm mx-auto px-3">
-        <PostList posts={allPosts} />
+        <PostList posts={posts} />
         <hr className="solid"></hr>
       </main>
 

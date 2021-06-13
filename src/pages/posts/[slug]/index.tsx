@@ -1,4 +1,4 @@
-import posts from '../../../../posts.json';
+import posts from 'posts';
 import { useEffect } from 'react';
 import FooterEnd from 'components/FooterEnd';
 import HomeButton from 'components/HomeButton';
@@ -51,10 +51,10 @@ function rewriteImageUrls(content: string) {
 const Post = ({ title, date, content }: PostProps) => {
   useEffect(formatCodeBlocks);
 
-  const readTime = Math.round(content.split(' ').length / 200);
+  const readTime = content !== null ? Math.round(content.split(' ').length / 200) : 0;
   const meta = readTime >= 1 ? `${date} | ${readTime} min read` : date;
 
-  const __html = pipe(addDataTextAttr, rewriteImageUrls)(content);
+  const __html = pipe(addDataTextAttr, rewriteImageUrls)(content ?? `You haven't written anything yet`);
 
   return (
     <>

@@ -18,6 +18,9 @@
     "strict": true,
     "target": "esnext",
     "baseUrl": "src",
+    "paths": {
+      "posts": ["../posts.json"]
+    }
   },
   "ts-node": {
     // these options are overrides used only by ts-node
