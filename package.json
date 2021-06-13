@@ -20,6 +20,7 @@
     "@types/react": "^17.0.8",
     "@types/react-dom": "^17.0.5",
     "autoprefixer": "^10.2.6",
+    "pipe-and-compose": "0.0.6",
     "postcss": "^8.3.0",
     "rimraf": "^3.0.2",
     "sass": "^1.34.0",

@@ -1,17 +1,32 @@
-import { useRouter } from 'next/router';
 import posts from '../../../../posts.json';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import FooterEnd from 'components/FooterEnd';
-import { format } from 'date-fns';
 import HomeButton from 'components/HomeButton';
-import Error404Page from 'components/Error404Page';
 import styles from 'styles/Post.module.scss';
 import formatCodeBlocks from 'components/Highlight';
+import { GetStaticProps, GetStaticPaths } from 'next';
+import { format } from 'date-fns';
+import { pipe } from 'pipe-and-compose';
 
 type PostProps = {
   title: string;
   date: string;
   content: string;
+};
+
+export const getStaticProps: GetStaticProps = async function ({ params }) {
+  const slugParam = params?.slug ?? '';
+  const post = posts.find(({ slug }) => slugParam === slug);
+  if (post === undefined) return { notFound: true };
+
+  const date = post.published_at ? format(new Date(post.published_at), 'dd MMM yyyy') : 'Draft';
+  const { title, content } = post;
+  return { props: { title, date, content } };
+};
+
+export const getStaticPaths: GetStaticPaths = async function () {
+  const paths = posts.map(({ slug }) => ({ params: { slug } }));
+  return { paths, fallback: false };
 };
 
 function addDataTextAttr(content: string) {
@@ -33,13 +48,13 @@ function rewriteImageUrls(content: string) {
   return content.replace(/http:\/\/localhost:3001\/content/g, '');
 }
 
-const PostPage = ({ title, date, content }: PostProps) => {
+const Post = ({ title, date, content }: PostProps) => {
+  useEffect(formatCodeBlocks);
+
   const readTime = Math.round(content.split(' ').length / 200);
   const meta = readTime >= 1 ? `${date} | ${readTime} min read` : date;
 
-  const modifiedHyperlinks = addDataTextAttr(content);
-  const modifiedImages = rewriteImageUrls(modifiedHyperlinks);
-  const modifiedContent = modifiedImages;
+  const __html = pipe(addDataTextAttr, rewriteImageUrls)(content);
 
   return (
     <>
@@ -52,40 +67,12 @@ const PostPage = ({ title, date, content }: PostProps) => {
         </div>
         <hr className="solid pt-12"></hr>
 
-        <div
-          id="post-content"
-          className={styles.post}
-          dangerouslySetInnerHTML={{ __html: modifiedContent }}
-        />
+        <div id="post-content" className={styles.post} dangerouslySetInnerHTML={{ __html }} />
 
         <FooterEnd />
       </div>
     </>
   );
-};
-
-const Post = () => {
-  const router = useRouter();
-  const { slug } = router.query;
-
-  useEffect(formatCodeBlocks);
-
-  const post = posts.find(x => x.slug === slug);
-
-  let element: JSX.Element;
-
-  if (!post) {
-    element = Error404Page();
-  } else {
-    let date: string;
-    if (post.published_at) date = format(new Date(post.published_at), 'dd MMM yyyy');
-    else date = 'Draft';
-    const { title, content } = post;
-
-    element = PostPage({ title, date, content });
-  }
-
-  return element;
 };
 
 export default Post;

@@ -15,8 +15,10 @@ const PostListItem = ({ title, date, preview, slug }: Props) => {
 
   const unpublished = date === null || publishedDate > new Date() ? ' | Unpublished' : '';
 
+  const href = `/posts/${slug}`;
+
   return (
-    <Link href={`/post/${slug}`}>
+    <Link href={href}>
       <div className={`${styles.postListItem} py-24 cursor-pointer`}>
         <h3 className="text-3xl font-bold mb-2 transition-colors">{title}</h3>
         <p className="text-gray-400 mb-5">
