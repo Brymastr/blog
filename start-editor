@@ -13,14 +13,14 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   open $postsUrl
 else
-  echo What... windows? lol
+  echo Sorry, no windows.
   exit 1
 fi
 
 
 docker-compose logs webhook
 
-docker attach blog-webhook-1
+docker attach blog_webhook_1
 
 function cleanup {
   docker-compose down
