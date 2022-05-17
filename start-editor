@@ -4,7 +4,7 @@ touch posts.json
 
 docker-compose up -d --build
 
-sleep 2
+sleep 5
 
 postsUrl="http://localhost:3001/ghost/#/posts"
 
@@ -20,7 +20,7 @@ fi
 
 docker-compose logs webhook
 
-docker attach blog_webhook_1
+docker attach blog-webhook-1
 
 function cleanup {
   docker-compose down
