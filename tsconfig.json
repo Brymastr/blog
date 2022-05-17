@@ -6,7 +6,10 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "es2017"],
+    "lib": [
+      "dom",
+      "es2017"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
@@ -19,8 +22,11 @@
     "target": "esnext",
     "baseUrl": "src",
     "paths": {
-      "posts": ["../posts.json"]
-    }
+      "posts": [
+        "../posts.json"
+      ]
+    },
+    "incremental": true
   },
   "ts-node": {
     // these options are overrides used only by ts-node
@@ -29,6 +35,12 @@
       "module": "commonjs"
     }
   },
-  "exclude": ["node_modules", "webhook"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "exclude": [
+    "node_modules",
+    "webhook"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }
